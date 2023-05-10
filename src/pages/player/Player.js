@@ -13,30 +13,32 @@ const Player = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
-        setCurrentTrack(tracks[currentIndex].track)
-    }, [tracks, currentIndex])
-
-    useEffect(() => {
         if (location.state) {
-            apiClient.get(`/playlists/${location.state?.id}/tracks`)
-                .then(res => {
+            apiClient
+                .get("playlists/" + location.state?.id + "/tracks")
+                .then((res) => {
                     setTracks(res.data.items);
-                    setCurrentTrack(res.data.items[0].track);
-                })
+                    setCurrentTrack(res.data?.items[0]?.track);
+                });
         }
     }, [location.state]);
 
+    useEffect(() => {
+        setCurrentTrack(tracks[currentIndex]?.track);
+    }, [currentIndex, tracks]);
+
     return (
-        <div className='screen-container flex'>
+        <div className="screen-container flex">
             <div className="left-player-body">
                 <AudioPlayer currentTrack={currentTrack} />
+
             </div>
             <div className="right-player-body">
-                <SongCard album={currentTrack.album} />
+                <SongCard album={currentTrack?.album} />
                 <Queue tracks={tracks} setCurrentIndex={setCurrentIndex} />
             </div>
         </div>
-    )
+    );
 }
 
 export default Player
