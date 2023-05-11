@@ -4,6 +4,11 @@ circle {
     transform-origin: 50% 50%;
 }
 
+image.active {
+    animation: rotation 30s infinite linear;
+    transform-origin: 50% 50%;
+}
+
 .progress-circle {
     justify-content: center;
     align-items: center;
